@@ -12,17 +12,14 @@ export default function Navbar() {
   const router = useRouter();
   const onHome = pathname === "/";
 
-  const sections = [
+  const sections: { hash: string; label: string; primary?: boolean }[] = [
     { hash: "#home", label: t.nav.home },
     { hash: "#gallery", label: t.nav.gallery },
     { hash: "#before-after", label: t.nav.beforeAfter },
     { hash: "#pricing", label: t.nav.pricing },
+    { hash: "#appointment", label: t.nav.appointment, primary: true },
+    { hash: "#payment", label: t.nav.payment },
     { hash: "#contact", label: t.nav.contact },
-  ];
-
-  const pages = [
-    { href: "/appointment", label: t.nav.appointment, primary: true },
-    { href: "/payment", label: t.nav.payment },
   ];
 
   function handleSectionClick(e: React.MouseEvent, hash: string) {
@@ -70,23 +67,14 @@ export default function Navbar() {
               key={s.hash}
               href={onHome ? s.hash : "/" + s.hash}
               onClick={(e) => handleSectionClick(e, s.hash)}
-              className="px-3 py-2 text-sm font-medium text-ink-800 hover:text-brand-600 transition"
-            >
-              {s.label}
-            </a>
-          ))}
-          {pages.map((p) => (
-            <Link
-              key={p.href}
-              href={p.href}
               className={`px-3 py-2 text-sm font-medium transition ${
-                p.primary
+                s.primary
                   ? "ml-1 bg-brand-700 text-white rounded-md hover:bg-brand-800"
                   : "text-ink-800 hover:text-brand-600"
               }`}
             >
-              {p.label}
-            </Link>
+              {s.label}
+            </a>
           ))}
           <div className="ml-3 flex border border-brand-300 rounded overflow-hidden text-xs">
             <button
@@ -113,22 +101,12 @@ export default function Navbar() {
                 key={s.hash}
                 href={onHome ? s.hash : "/" + s.hash}
                 onClick={(e) => handleSectionClick(e, s.hash)}
-                className="py-2 text-sm font-medium text-ink-800 hover:text-brand-600"
-              >
-                {s.label}
-              </a>
-            ))}
-            {pages.map((p) => (
-              <Link
-                key={p.href}
-                href={p.href}
-                onClick={() => setOpen(false)}
                 className={`py-2 text-sm font-medium ${
-                  p.primary ? "text-brand-700" : "text-ink-800"
+                  s.primary ? "text-brand-700" : "text-ink-800"
                 } hover:text-brand-600`}
               >
-                {p.label} {p.primary && "→"}
-              </Link>
+                {s.label} {s.primary && "→"}
+              </a>
             ))}
             <div className="mt-2 mb-3 flex border border-brand-300 rounded overflow-hidden text-xs w-fit">
               <button
